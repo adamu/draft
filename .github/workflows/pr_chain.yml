@@ -4,11 +4,13 @@ on:
     branches:
       - '!main'
     types:
+      - opened
       - ready_for_review
 
 jobs:
   convert-to-draft:
     name: Convert to draft
+    if:  github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
