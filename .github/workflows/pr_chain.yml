@@ -1,0 +1,26 @@
+name: PR Chain
+on:
+  pull_request:
+    branches:
+      - '!main'
+    types:
+      - ready_for_review
+
+jobs:
+  convert-to-draft:
+    name: Convert to draft
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Convert to draft
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr comment ${{ github.event.pull_request.number}} \
+          "Please only request review for PRs targeting main."
+
+      - name: Convert to draft
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr ready ${{ github.event.pull_request.number}} --undo
+
