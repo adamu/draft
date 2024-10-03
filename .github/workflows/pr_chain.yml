@@ -13,7 +13,9 @@ jobs:
       - name: Convert to draft
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run:  gh pr comment "Please only request review for PRs targeting main."
+        run: |
+          gh pr comment ${{ github.event.pull_request.number}} \
+          --body "Please only request review for PRs targeting main."
 
       - name: Convert to draft
         env:
